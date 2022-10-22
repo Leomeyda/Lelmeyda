@@ -465,6 +465,399 @@ EMPLEADO.H EMPLEADO.H EMPLEADO.H EMPLEADO.H EMPLEADO.H EMPLEADO.H
 
 
 
+---------------------------------------------------------------------------------------------------
+
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+///Busquedas
+
+//Requiere que el algoritmo este ordenado
+int busquedaBinaria(int v[], int tam, int dato);
+int busquedaSecuencial(int v[], int n, int dato);
+int busquedaBinariaR(int v[],int tam,int min, int max, int dato);
+
+///Ordenamientos
+
+void ordenamientoBurbuja(int v[], int m);
+void ordenamientoQuickSort(int v[], int inicio, int final);
+int particion(int v[], int inicio, int final);
+void ordenamientoIntercambio(int v[], int n);
+void ordenamientoSeleccion(int v[], int n);
+void ordenamientoMergeSort(int v[], int inicio, int final);
+void merge(int v[], int inicio, int mitad, int final);
+///ETC
+void mostrarVector(int v[], int m);
+void cambio(int a, int b);
+
+int main()
+{
+/*
+    int a=2, b=3;
+
+
+
+    int a[5]={1,3,2,5,4};
+    int inf, sup, mitad, dato;
+    char bandera = 'F';
+
+int resultado = busquedaBinaria(a,5,9);
+
+printf("Mitad:  %d", resultado);
+
+    mostrarVector(a,5);
+printf("\n");
+    ordenamientoBurbuja(a,5);
+
+    mostrarVector(a,5);
+*/
+
+    int valores[9] = {13, 15, 18,23,32,45,55,81,90};
+    int n = 9;
+
+    int resultado = busquedaBinariaR2(valores,13,0,8);
+    if (resultado == -1){
+        printf(" No se encontro el numero ");
+    }else printf("Se encontro el numero");
+
+//
+//    printf("-------------------------------------------------");
+//
+//    ordenamientoSeleccion(b,7);
+//    mostrarVector(b,7);
+//printf("\n-------------------------------------------------\n");
+//
+// printf("Se encontro en la posicion numero: %d",  busquedaSecuencial(b,7,11));
+/*
+
+    dato=4;
+    //Busqueda
+
+
+    inf=0;
+    sup=5;
+
+    while (inf<=sup){
+        mitad=(inf+sup)/2;
+
+        if (a[mitad]== dato){
+            bandera = 'V';
+            break;
+        }
+        if (a[mitad] > dato){
+            sup = mitad;
+            mitad = (inf+sup)/2;
+        }
+        if (a[mitad] < dato){
+            inf = mitad;
+            mitad = (inf+sup)/2;
+        }
+    }
+    if (bandera == 'F'){
+        printf("El numero no existe\n");
+    }
+    else if (bandera == 'V')
+        printf("El numero existe, en la posicion: -> %d <-\n", mitad);
+*/
+    return 0;
+}
+
+void ordenamientoSeleccion(int v[], int tam){
+
+    int indiceMenor=0;
+    int aux;
+
+        for(int i=0; i<tam-1; i++){
+                indiceMenor=i;
+            for(int j=i+1; j<tam; j++){
+                if(v[j]== v[indiceMenor]){
+                    indiceMenor = j;
+                }
+            }
+          aux = v[i];
+          v[i] = v[indiceMenor];
+          v[indiceMenor] = aux;
+        }
+
+
+}
+
+
+int busquedaSecuencial(int v[], int tam, int datoaBuscar){
+
+    char bandera = 'F';
+    int pos=0;
+    int opcion=1;
+        for(int i=0; (i<tam && bandera=='F'); i++){
+            if(v[i] == datoaBuscar){
+                datoaBuscar = v[i];
+                bandera = 'V';
+                pos = i;
+
+
+                printf("Que le gustaria retornar?, la posicion, o el numero encontrado?\nOpcion 1: Numero encontrado\nOpcion2: Posicion del numero encontrado");
+                scanf("%d", &opcion);
+                if(opcion == 1){
+                    return pos;
+                }else return datoaBuscar;
+
+            }
+        }
+
+}
+
+
+int busquedaBinariaR2(int valores[], int objetivo, int primero, int ultimo){
+
+
+    if (ultimo >= primero){
+        int central = primero + (ultimo-primero)/2;
+
+        if(valores[central] == objetivo){
+            return central;
+        }
+
+        if (valores[central] > objetivo){
+            return busquedaBinariaR2(valores, objetivo, primero, central-1);
+        }
+
+            return busquedaBinariaR2(valores, objetivo, central + 1, ultimo);
+    }
+
+    return -1;
+
+}
+
+
+int busquedaBinariaR(int v[],int tam,int min, int max,int dato){
+
+
+    int recurse(min,max){
+
+    if(min > max){
+    int mitad=((min+max)/2);
+
+    if (v[mitad] == dato){
+        return mitad;
+    }
+    if (v[mitad] > dato){
+        return recurse(min, mitad-1);
+    }
+        return recurse(mitad + 1, max);
+
+    }
+
+
+
+    return recurse(0, tam - 1);
+    }
+
+    return -1;
+}
+
+
+
+
+int busquedaBinaria(int v[], int tam, int dato){
+
+int inf, sup, mitad;
+    inf=0;
+    sup=tam-1;
+
+    while (inf<=sup){
+        mitad =((sup-inf)/2)+inf;
+        if (dato==v[mitad]){
+            return mitad;
+        }
+        if (dato<v[mitad]){
+            sup=mitad-1;
+        }
+        else{
+            inf=mitad+1;
+        }
+
+    }
+
+return -1;
+
+};
+
+
+void ordenamientoBurbuja(int v[], int tam){
+
+    int aux=0;
+
+    for (int i=0;i<tam;i++){
+        for(int j=0; j<tam-1;j++){
+            if (v[j]>v[j+1]){
+                aux=v[j];
+                v[j]=v[j+1];
+                v[j+1]=aux;
+            }
+        }
+    }
+
+}
+
+void mostrarVector(int v[], int m){
+
+for (int i=0;i<m;i++){
+    printf("\n %d ", v[i]);
+}
+
+}
+
+void ordenamientoQuickSort(int v[], int inicio, int final){
+    if(inicio < final){
+        int pivot = particion(v, inicio, final);
+        ordenamientoQuickSort(v, inicio, pivot-1);
+        ordenamientoQuickSort(v, pivot+1, final);
+    }
+
+}
+
+int particion(int v[], int inicio, int final){
+
+int aux=0;
+    int pivot = v[inicio];
+    int i = inicio + 1;
+
+    for (int j=i; j<=final; j++){
+        if(v[j] < pivot){
+             aux=v[i];
+                v[i]=v[j];
+                v[j]=aux;
+                i++;
+            }
+
+    }
+    aux=v[inicio];
+    v[inicio]=v[i-1];
+    v[i-1]=aux;
+    return i-1;
+}
+//
+//v[j]=aux;
+//v[j+1]=v[j];
+//v[j+1]=aux
+//
+
+
+void ordenamientoIntercambio(int v[], int n){
+
+    int aux=0;
+
+    for (int i=0; i<n-1;i++){
+        for (int j= i+1; j<n;j++){
+            if (v[j] < v[i]){
+            aux=v[j];
+            v[j]=v[i];
+            v[i]=aux;
+            }
+        }
+    }
+};
+
+void cambio(int a, int b){
+
+int aux= a;
+a=b;
+b=aux;
+
+}
+
+void ordenamientoInsercion(int v[], int n){
+
+    for (int i=1; i<n;i++){
+        int j=i;
+        int aux=v[i];
+
+        while(j > 0 && aux < v[j-1]){
+            v[j]=v[j-1];
+            j--;
+        }
+        v[j]=aux;
+    }
+}
+
+
+
+
+void ordenamientoMergeSort(int v[], int inicio, int final){
+    if (inicio<final){
+        int mitad = inicio + (final-inicio)/2;
+        ordenamientoMergeSort(v,inicio,mitad);
+        ordenamientoMergeSort(v,mitad+1,final);
+        merge(v,inicio,mitad,final);
+    }
+
+}
+
+void merge(int v[], int inicio, int mitad, int final){
+    int i,j,k;
+    int elementosIzq = mitad - inicio + 1;
+    int elementosDer = final - mitad;
+
+
+    int izquierda[elementosIzq];
+    int derecha[elementosDer];
+
+    for (int i=0; i<elementosIzq;i++){
+        izquierda[i] = v[inicio+i];
+    }
+    for (int j=0; j<elementosDer; j++){
+        derecha[j] = v[mitad+1+j];
+    }
+
+    i=0;
+    j=0;
+    k = inicio;
+
+    while (i < elementosIzq && j < elementosDer){
+        if(izquierda[i] <= derecha[j]){
+            v[k] = izquierda[i];
+            i++;
+        } else {
+            v[k] = derecha[j];
+            j++;
+        }
+        k++;
+    }
+
+    while (j < elementosDer){
+        v[k] = derecha[j];
+        j++;
+        k++;
+    }
+
+    while (i < elementosIzq){
+        v[k] = izquierda[i];
+        i++;
+    }
+
+}
+
+
+
+int chequeoRepeticion(int v[], int tam, int numeroAleatorio){
+
+    int parar=0;
+
+        for(int i=0; (i<tam && parar==0); i++){
+            if(v[i]== numeroAleatorio){
+                parar=1;
+            }
+        }
+        return parar;
+
+
+
+}
+
+
+
 
 
 
